@@ -1,0 +1,73 @@
+
+<div mat-dialog-title></div>
+<mat-toolbar color="primary">
+ 
+<h1>Ajouter/Modifier Utilisateur</h1>
+</mat-toolbar>
+<form [formGroup]="utilForm" (ngSubmit)="onFormSubmit()">
+    <div mat-dialog-content class="content">
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Nom</mat-label>
+                <input matInput type="text" formControlName="nom">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Prénom</mat-label>
+                <input matInput formControlName="prenom">
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" placeholder="Ex. test@gmail.com" formControlName="email">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Téléphone</mat-label>
+                <span matTextPrefix>+216 &nbsp;</span>
+                <input type="tel" matInput placeholder="55-555-12" formControlName="tel">
+                <mat-icon matSuffix>mode_edit</mat-icon>
+              </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Adresse</mat-label>
+                <input matInput formControlName="adresse">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Login</mat-label>
+                <input matInput formControlName="login">
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Enter your password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                  <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+            <mat-form-field appearance="fill">
+                <mat-label>Rôle</mat-label>
+                <input [matAutocomplete]="auto" matInput formControlName="role">
+                <mat-autocomplete autoActiveFirstOption  #auto="matAutocomplete">
+                <mat-option *ngFor="let item of cloture " [value]="item">{{item}}
+                </mat-option>
+               </mat-autocomplete>
+            </mat-form-field>
+            <div class="row" *ngIf="utilForm?.get('role')?.value === 'TECH'">
+                <mat-form-field appearance="fill">
+                    <mat-label>Spécialité</mat-label>
+                    <mat-select formControlName="specialite">
+                        <mat-option *ngFor="let specialite of specialites" [value]="specialite.libSpec">{{ specialite.libSpec }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+         
+    </div>
+    <div mat-dialog-actions class="action">
+        <button mat-raised-button [mat-dialog-close]="false">Retour</button>
+        <button mat-raised-button color="primary" type="submit">{{data ? 'Modifier' : 'Enregistrer'}}</button>
+    </div>
+</form>
